@@ -1,0 +1,47 @@
+[package]
+name = "trove"
+version = "0.1.0"
+description = "Search your own files by meaning — fully offline."
+authors = ["Ayush Yadav"]
+license = "MIT"
+repository = "https://github.com/Ayush-yadav11/trove"
+edition = "2021"
+rust-version = "1.85"
+
+[lib]
+# The `_lib` suffix avoids a lib/bin name clash on Windows
+# (https://github.com/rust-lang/cargo/issues/8519).
+name = "trove_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+anyhow = "1"
+# Engine only: no MCP server, no CLI. Switch to the git dependency once
+# quillrag's `feat/core-library` branch is published.
+quillrag = { path = "../../quillrag", default-features = false, features = ["ocr"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# MiniLM inference in an unoptimized build takes seconds per batch; optimize
+# dependencies even in dev so `tauri dev` is usable.
+[profile.dev.package."*"]
+opt-level = 3
+
+# https://tauri.app/concept/size/#cargo-configuration
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = 3
+# No `panic = "abort"`: the PDF extractor catches parser panics so one
+# malformed file can't take the app down, and that needs unwinding.
+strip = true
