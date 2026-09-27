@@ -19,9 +19,8 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 anyhow = "1"
-# Engine only: no MCP server, no CLI. Switch to the git dependency once
-# quillrag's `feat/core-library` branch is published.
-quillrag = { path = "../../quillrag", default-features = false, features = ["ocr"] }
+# Engine only (no MCP server, no CLI), with PDF + OCR extractors.
+quillrag = { git = "https://github.com/Ayush-yadav11/quillrag", rev = "59af4706b7f3c5efd99f9551ac72dad0a43a495a", default-features = false, features = ["ocr"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tauri = { version = "2", features = ["tray-icon"] }
@@ -45,3 +44,7 @@ opt-level = 3
 # No `panic = "abort"`: the PDF extractor catches parser panics so one
 # malformed file can't take the app down, and that needs unwinding.
 strip = true
+
+# Working on quillrag at the same time? Build against a local checkout:
+# [patch."https://github.com/Ayush-yadav11/quillrag"]
+# quillrag = { path = "../../quillrag" }

@@ -20,13 +20,8 @@ Early development. Folders are re-indexed at startup and on demand
 
 ## Development
 
-Trove depends on quillrag by path, so check both out side by side:
-
-```
-NEW/
-├── quillrag/   (branch feat/core-library)
-└── trove/
-```
+quillrag is pulled from GitHub at a pinned commit (see `src-tauri/Cargo.toml`,
+which also shows how to point it at a local checkout while hacking on both).
 
 ```sh
 pnpm install

@@ -4089,6 +4089,7 @@ dependencies = [
 [[package]]
 name = "quillrag"
 version = "0.1.6"
+source = "git+https://github.com/Ayush-yadav11/quillrag?rev=59af4706b7f3c5efd99f9551ac72dad0a43a495a#59af4706b7f3c5efd99f9551ac72dad0a43a495a"
 dependencies = [
  "anyhow",
  "candle-core",
